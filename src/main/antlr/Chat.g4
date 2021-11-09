@@ -16,7 +16,7 @@ SHOUTS              : S H O U T S;
 WORD                : (LOWERCASE | UPPERCASE | '_')+ ;
 WHITESPACE          : (' ' | '\t') ;
 NEWLINE             : ('\r'? '\n' | '\r')+ ;
-TEXT                : ~[\])]+ ;
+TEXT : {_input.LA(-1) == '[' || _input.LA(-1) == '('}? ~[\])]+ ;
 
 /*
  * Parser Rules
@@ -30,6 +30,6 @@ command             : (SAYS | SHOUTS) ':' WHITESPACE ;
 emoticon            : ':' '-'? ')'
                     | ':' '-'? '('
                     ;
-link                : '[' TEXT ']' '(' TEXT ')' ;
+link                : '[' TEXT ']' '(' TEXT ')';
 color               : '/' WORD '/' message '/';
 mention             : '@' WORD ;
